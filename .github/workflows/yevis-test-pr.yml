@@ -37,12 +37,21 @@ jobs:
           curl -fsSL -o yevis https://github.com/sapporo-wes/yevis-cli/releases/download/0.5.9/yevis_${ARCH}
           chmod +x ./yevis
 
+      - name: "Run Sapporo-WES docker compose"
+        run: |
+          git clone https://github.com/rodtheo/sapporo-wes
+          cd sapporo-wes
+          docker compose up -d
+          # Wait for the API to be ready
+          timeout 60 bash -c 'until curl -sf http://localhost:1122/service-info; do sleep 2; done'
+
       - name: "Run tests"
         id: test
         run: |
           mkdir -p ./test-logs ./test-results
           SAPPORO_RUN_DIR=${GITHUB_WORKSPACE}/test-results \
             ./yevis test \
+              -w http://localhost:1122/
               --verbose \
               --fetch-ro-crate \
               --from-pr ${{github.event.pull_request._links.html.href }} \
