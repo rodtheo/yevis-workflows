@@ -32,6 +32,7 @@ jobs:
         if: ${{ steps.download-binary-artifact.outcome != 'success' }}
         run: |
           curl -fsSL -O https://github.com/sapporo-wes/yevis-cli/releases/download/0.5.9/yevis_x86_64
+          mv yevis_x86_64 yevis
           chmod +x ./yevis
 
       - name: "Run tests"
