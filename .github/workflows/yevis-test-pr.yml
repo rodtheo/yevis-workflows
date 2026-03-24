@@ -43,6 +43,7 @@ jobs:
           cd sapporo-wes
           docker compose up -d
           # Wait for the API to be ready
+          cd ..
           timeout 60 bash -c 'until curl -sf http://localhost:1122/service-info; do sleep 2; done'
 
       - name: "Run tests"
