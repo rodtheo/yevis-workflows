@@ -52,7 +52,7 @@ jobs:
           mkdir -p ./test-logs ./test-results
           SAPPORO_RUN_DIR=${GITHUB_WORKSPACE}/test-results \
             ./yevis test \
-              -w http://localhost:1122/
+              -w http://localhost:1122/ \
               --verbose \
               --fetch-ro-crate \
               --from-pr ${{github.event.pull_request._links.html.href }} \
