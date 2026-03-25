@@ -31,10 +31,6 @@ jobs:
       - name: "Download yevis binary from release"
         if: ${{ steps.download-binary-artifact.outcome != 'success' }}
         run: |
-          ARCH=$(uname -m)
-          # Normalize aarch64 -> arm64 to match release naming
-          if [ "${ARCH}" = "aarch64" ]; then ARCH="arm64"; fi
-          # curl -fsSL -o yevis https://github.com/sapporo-wes/yevis-cli/releases/download/0.5.9/yevis_${ARCH}
           curl -fsSL -o yevis https://github.com/rodtheo/yevis-cli/releases/download/v0.5.9-rod/yevis
           chmod +x ./yevis
 
