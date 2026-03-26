@@ -32,8 +32,17 @@ jobs:
       - name: "Download yevis binary from release"
         if: ${{ steps.download-binary-artifact.outcome != 'success' }}
         run: |
-          curl -fsSL -O https://github.com/sapporo-wes/yevis-cli/releases/latest/download/yevis
+          curl -fsSL -o yevis https://github.com/rodtheo/yevis-cli/releases/download/v0.5.9-rod/yevis
           chmod +x ./yevis
+
+      - name: "Run Sapporo-WES docker compose"
+        run: |
+          git clone https://github.com/rodtheo/sapporo-wes
+          cd sapporo-wes
+          docker compose up -d
+          # Wait for the API to be ready
+          cd ..
+          timeout 60 bash -c 'until curl -sf http://localhost:1122/service-info; do sleep 2; done'
 
       - name: "Run publish"
         id: publish
@@ -43,6 +52,7 @@ jobs:
             ./yevis publish \
               --verbose \
               --repository ${{ github.repository }} \
+              -w http://localhost:1122/ \
               --with-test \
               --from-pr ${{github.event.pull_request._links.html.href }} \
               --upload-zenodo \
