@@ -1,0 +1,22 @@
+id: 7b01bf98-ccb8-4586-885e-f062ccc1072b
+version: 1.0.0
+license: CC0-1.0
+authors:
+- github_account: rodtheo
+  name: Rodrigo Theodoro Rocha
+workflow:
+  name: Yevis getting started - Download SRA
+  readme: https://raw.githubusercontent.com/pitagora-network/pitagora-cwl/4e84905f265e1db212c406d34ae4db2bf565e856/README.md
+  language:
+    type: CWL
+    version: v1.0
+  files:
+  - url: https://raw.githubusercontent.com/pitagora-network/pitagora-cwl/4e84905f265e1db212c406d34ae4db2bf565e856/tools/download-sra/download-sra.cwl
+    target: download-sra.cwl
+    type: primary
+  testing:
+  - id: test_1
+    files:
+    - url: https://raw.githubusercontent.com/pitagora-network/pitagora-cwl/4e84905f265e1db212c406d34ae4db2bf565e856/tools/download-sra/download-sra.yml
+      target: wf_params.yml
+      type: wf_params
